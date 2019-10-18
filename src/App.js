@@ -1,26 +1,45 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './index.scss';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import  ToolBar from './components/ToolBar'
+import OpenSideBar from './components/OpenSideBar';
+import Layout from './components/Layout'
+
+class App extends React.Component{
+ state = {
+  openSideBar: false
+ }
+
+ openToggleBtn = () => {
+  this.setState((prevState) => {
+    return {openSideBar: !prevState.openSideBar}
+  })
+ }
+ closeToggleBtn = () => {
+  this.setState({openSideBar: false})
+ }
+
+  render() {
+
+    let layout;
+    if(this.state.openSideBar){  
+      layout =  <Layout closeToggleBtn={this.closeToggleBtn}/>
+    }
+
+    return (
+      <div style={{height: '100%'}} className="App">
+        <ToolBar openToggleBtn={this.openToggleBtn}/>
+        <OpenSideBar show={this.state.openSideBar} />
+        {layout}
+        <main className="main-content">
+          it is the web page content
+        </main>
+      </div>
+    );
+
+  }
 }
+
+  
 
 export default App;
